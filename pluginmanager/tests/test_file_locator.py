@@ -35,11 +35,11 @@ class TestFileLocator(unittest.TestCase):
 
     def test_add_get_set_plugin_filepaths(self):
         filepath = 'my/test/filepath'
-        self.file_locator.add_filepath(filepath)
+        self.file_locator.add_plugin_filepaths(filepath)
         filepaths = self.file_locator.get_plugin_filepaths()
         self.assertIn(filepath, filepaths)
         set_filepath = 'new/set/filepath'
-        self.file_locator.set_filepath(set_filepath)
+        self.file_locator.set_plugin_filepaths(set_filepath)
         filepaths = self.file_locator.get_plugin_filepaths()
         self.assertIn(set_filepath, filepaths)
         self.assertNotIn(filepath, filepaths)
