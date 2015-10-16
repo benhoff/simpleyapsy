@@ -81,6 +81,7 @@ class WithInfoFileGetter(object):
         config_dict = {}
         # get all data out of config_parser
         config_dict.update(config_parser)
+        print(config_dict)
 
         # now remove and parse data stored in "Core" key
         core_config = config_dict.pop("Core")
