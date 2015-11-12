@@ -1,7 +1,7 @@
 import os
 import sys
 import inspect
-from .compat import reload, load_source
+from .compat import load_source
 
 from pluginmanager import util as manager_util
 
@@ -50,7 +50,8 @@ class ModuleManager(object):
 
     def reload_module(self, name):
         module = sys.modules[name]
-        reload(module)
+        load_source(name, module.__file__)
+        return sys.modules[name]
 
     def _get_modules(self, names):
         loaded_modules = []

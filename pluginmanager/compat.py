@@ -1,4 +1,5 @@
 import sys
+import os
 
 try:
     from site import getsitepackages
@@ -20,12 +21,18 @@ if is_py3:
         # flake8: noqa
         from importlib import reload
         import importlib
+        import imp
+        load_source = imp.load_source
 
+        """
         def load_source(name, file_path):
             spec = importlib.util.spec_from_file_location(name,
                                                           file_path)
-            module = spec.loader.load_module()
+            spec.loader.create_module()
+            module = spec.loader.exec_module()
+            # module = spec.loader.load_module()
             return module
+        """
     else:
         # flake8: noqa
         from imp import reload

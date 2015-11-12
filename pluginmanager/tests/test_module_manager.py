@@ -103,6 +103,26 @@ class TestModuleManager(unittest.TestCase):
         loaded_modules = self.module_manager.get_loaded_modules()
         self.assertIn(module, loaded_modules)
 
+    def test_reload(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        code = 'test = 5'
+        filename = os.path.join(temp_dir.name, 'a.py')
+        file_ = open(filename, 'w+')
+        file_.write(code)
+        file_.close()
+        module = self.module_manager.load_modules(filename).pop()
+        self.assertEqual(module.test, 5)
+        new_code = 'test = 6\nblue = 7'
+        file_ = open(filename, 'w+')
+        file_.seek(0)
+        file_.write(new_code)
+        file_.seek(0)
+        file_.close()
+        new_module = self.module_manager.reload_module(module.__name__)
+        self.assertEqual(new_module.blue, 7)
+        self.assertEqual(new_module.test, 6)
+        temp_dir.cleanup()
+
     def test_collect_plugins(self):
         self.module_manager.module_filters = []
         module, _ = self._load_modules()
